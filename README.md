@@ -6,7 +6,7 @@ A simple API.ai wrapper with flexible query response object leveraging *json.Raw
 
 Example: Perform a query and access some response params.
 
-```
+```golang
 
   c := apiai.NewClient("<YOUR API.AI ACCESS TOKEN>")
 
