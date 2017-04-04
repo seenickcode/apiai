@@ -7,8 +7,13 @@ import (
 	"net/http"
 )
 
+type Context struct {
+	Name     string `json:"name"`
+	Lifespan int    `json:"lifespan"`
+}
+
 // AddContext adds a context to the session
-func (c *Client) AddContext(sessionID string, name string, lifespan int) (
+func (c *Client) AddContext(sessionID string, context *Context) (
 	answer *QueryResponse, err error) {
 
 	url := fmt.Sprintf("%s/contexts?v=%s&lang=en&sessionId=%v",
@@ -18,8 +23,8 @@ func (c *Client) AddContext(sessionID string, name string, lifespan int) (
 		Name     string `json:"name"`
 		Lifespan int    `json:"lifespan"`
 	}{
-		Name:     name,
-		Lifespan: lifespan,
+		Name:     context.Name,
+		Lifespan: context.Lifespan,
 	}
 	b := new(bytes.Buffer)
 	json.NewEncoder(b).Encode(body)
