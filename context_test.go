@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestAPIAIQueries(t *testing.T) {
+func TestAPIAIContexts(t *testing.T) {
 
 	assert := assert.New(t)
 
@@ -17,7 +17,13 @@ func TestAPIAIQueries(t *testing.T) {
 	}
 	c := NewClient(accessToken)
 
-	answer, err := c.Query(randomString(), "bla bla bla")
+	sid := randomString()
+
+	contextName := randomString()
+	answer, err := c.AddContext(sid, contextName, 5)
 	assert.NoError(err)
 	assert.Equal(200, answer.Status.Code)
+
+	_, err = c.ClearContext(sid)
+	assert.NoError(err)
 }
