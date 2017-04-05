@@ -6,11 +6,11 @@ import (
 )
 
 type Intent struct {
-	ID         string             `json:"id"`
-	Name       string             `json:"name"`
-	ContextIn  []*json.RawMessage `json:"contextIn"`
-	ContextOut []*json.RawMessage `json:"contextOut"`
-	Actions    []string           `json:"actions"`
+	ID         string     `json:"id"`
+	Name       string     `json:"name"`
+	ContextIn  []string   `json:"contextIn"`
+	ContextOut []*Context `json:"contextOut"`
+	Actions    []string   `json:"actions"`
 }
 
 // TODO add remaining fields https://docs.api.ai/docs/intents#get-intents
@@ -24,7 +24,7 @@ func (c *Client) ListIntents() (list []*Intent, err error) {
 	if err != nil {
 		return
 	}
-
+	//fmt.Printf("%v", string(data))
 	list = []*Intent{}
 	if err := json.Unmarshal(data, &list); err != nil {
 		return list, err
