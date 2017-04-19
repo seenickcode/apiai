@@ -8,8 +8,9 @@ import (
 )
 
 type Context struct {
-	Name     string `json:"name"`
-	Lifespan int    `json:"lifespan"`
+	Name       string            `json:"name"`
+	Lifespan   int               `json:"lifespan"`
+	Parameters map[string]string `json:"parameters"`
 }
 
 // AddContext adds a context to the session
@@ -19,15 +20,8 @@ func (c *Client) AddContext(sessionID string, context *Context) (
 	url := fmt.Sprintf("%s/contexts?v=%s&lang=en&sessionId=%v",
 		APIAIBaseURL, APIVersion, sessionID)
 
-	body := struct {
-		Name     string `json:"name"`
-		Lifespan int    `json:"lifespan"`
-	}{
-		Name:     context.Name,
-		Lifespan: context.Lifespan,
-	}
 	b := new(bytes.Buffer)
-	json.NewEncoder(b).Encode(body)
+	json.NewEncoder(b).Encode(context)
 	data, err := c.httpCall("POST", url, b)
 
 	answer = &QueryResponse{}

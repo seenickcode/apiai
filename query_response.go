@@ -15,7 +15,7 @@ type QueryResponse struct {
 		Action           string           `json:"action"`
 		ActionIncomplete bool             `json:"actionIncomplete"`
 		Parameters       *json.RawMessage `json:"parameters"`
-		Contexts         *json.RawMessage `json:"contexts"`
+		Contexts         []*Context       `json:"contexts"`
 		Metadata         struct {
 			IntentID                  string `json:"intentId"`
 			WebhookUsed               string `json:"webhookUsed"`
