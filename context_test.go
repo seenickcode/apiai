@@ -2,6 +2,7 @@ package apiai
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -23,9 +24,45 @@ func TestAPIAIContexts(t *testing.T) {
 		Name:     randomString(),
 		Lifespan: 5,
 	}
-	answer, err := c.AddContext(sid, c1)
+	a1, err := c.AddContext(sid, c1)
 	assert.NoError(err)
-	assert.Equal(200, answer.Status.Code)
+	assert.Equal(200, a1.Status.Code)
+
+	c2 := &Context{
+		Name:     randomString(),
+		Lifespan: 5,
+	}
+	a2, err := c.AddContext(sid, c2)
+	assert.NoError(err)
+	assert.Equal(200, a2.Status.Code)
+
+	contexts, err := c.FetchContexts(sid)
+	assert.NoError(err)
+	assert.Equal(2, len(contexts))
+	c1Found := false
+	for _, c := range contexts {
+		if c.Name == strings.ToLower(c1.Name) {
+			c1Found = true
+			break
+		}
+	}
+	assert.True(c1Found)
+	c2Found := false
+	for _, c := range contexts {
+		if c.Name == strings.ToLower(c2.Name) {
+			c2Found = true
+			break
+		}
+	}
+	assert.True(c2Found)
+
+	_, err = c.DeleteContext(sid, c1.Name)
+	assert.NoError(err)
+
+	contexts, err = c.FetchContexts(sid)
+	assert.NoError(err)
+	assert.Equal(1, len(contexts))
+	assert.Equal(strings.ToLower(c2.Name), contexts[0].Name) // NOTE api.ai lowercases any set context names
 
 	_, err = c.ClearContext(sid)
 	assert.NoError(err)

@@ -31,9 +31,11 @@ type QueryResponse struct {
 		} `json:"fulfillment"`
 		Score float64 `json:"score"`
 	} `json:"result"`
-	Status struct {
-		Code      int    `json:"code"`
-		ErrorType string `json:"errorType"`
-	} `json:"status"`
-	SessionID string `json:"sessionId"`
+	Status    ResponseStatus `json:"status"`
+	SessionID string         `json:"sessionId"`
+}
+
+type ResponseStatus struct {
+	Code      int    `json:"code"`
+	ErrorType string `json:"errorType"`
 }
