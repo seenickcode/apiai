@@ -13,9 +13,17 @@ type Context struct {
 	Parameters map[string]string `json:"parameters"`
 }
 
+type AddContextResponse struct {
+	Names  []string `json:"names"`
+	Status struct {
+		Code      int    `json:"code"`
+		ErrorType string `json:"errorType"`
+	} `json:"status"`
+}
+
 // AddContext adds a context to the session
 func (c *Client) AddContext(sessionID string, context *Context) (
-	answer *QueryResponse, err error) {
+	answer *AddContextResponse, err error) {
 
 	url := fmt.Sprintf("%s/contexts?v=%s&lang=en&sessionId=%v",
 		APIAIBaseURL, APIVersion, sessionID)
@@ -24,7 +32,7 @@ func (c *Client) AddContext(sessionID string, context *Context) (
 	json.NewEncoder(b).Encode(context)
 	data, err := c.httpCall("POST", url, b)
 
-	answer = &QueryResponse{}
+	answer = &AddContextResponse{}
 	if err := json.Unmarshal(data, &answer); err != nil {
 		return answer, err
 	}
