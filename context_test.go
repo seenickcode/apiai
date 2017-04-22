@@ -82,10 +82,13 @@ func TestAPIAIContextParamsWithQuery(t *testing.T) {
 
 	ctxKey1 := randomString()
 	ctxVal1 := randomString()
+	m1 := map[string]interface{}{
+		ctxKey1: ctxVal1,
+	}
 	c1 := &Context{
 		Name:       randomString(),
 		Lifespan:   5,
-		Parameters: map[string]string{ctxKey1: ctxVal1},
+		Parameters: m1,
 	}
 	_, err := c.AddContext(sid, c1)
 	assert.NoError(err)

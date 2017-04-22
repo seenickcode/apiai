@@ -8,9 +8,9 @@ import (
 )
 
 type Context struct {
-	Name       string            `json:"name"`
-	Lifespan   int               `json:"lifespan"`
-	Parameters map[string]string `json:"parameters"`
+	Name       string                 `json:"name"`
+	Lifespan   int                    `json:"lifespan"`
+	Parameters map[string]interface{} `json:"parameters"`
 }
 
 type AddContextResponse struct {
