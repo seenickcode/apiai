@@ -1,8 +1,17 @@
 # Overview
 
-A simple API.ai wrapper with flexible query response object leveraging *json.RawData.
+A simple API.ai SDK for Go.
 
-## Use
+# Features
+
+- Query
+  - Supports all query response fields, including:
+    - Multiple Fulfillment message types
+    - Params
+- List Intents
+- Add/Fetch/Delete/Clear Context
+
+# Examples
 
 Example: Perform a query and access some response params.
 
@@ -22,6 +31,10 @@ Example: Perform a query and access some response params.
 
 ```
 
-## Running Tests
+# Running Tests
+
+NOTE: Running tests require an API.ai Access Token. The tests use this token to
+perform a query triggering the Default Fallback Intent for that account to ensure
+basic tests pass.
 
 ``API_AI_ACCESS_TOKEN=<token> go test``

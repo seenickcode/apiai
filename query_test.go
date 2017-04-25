@@ -17,7 +17,10 @@ func TestAPIAIQueries(t *testing.T) {
 	}
 	c := NewClient(accessToken)
 
-	answer, err := c.Query(randomString(), "bla bla bla")
+	msg := "bla bla bla"
+	answer, err := c.Query(randomString(), msg)
 	assert.NoError(err)
 	assert.Equal(200, answer.Status.Code)
+	assert.NotEmpty(answer.Result.Fulfillment.TextMessages)
+	assert.NotEmpty(answer.Result.Fulfillment.TextMessages[0].Speech)
 }
